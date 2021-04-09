@@ -30,7 +30,6 @@ public function verify($user_id, Request $request) {
 
 public function resend() {
 
-    //dd(Auth::user());
 
     if (Auth::user()->hasVerifiedEmail()) {
         return response()->json(['apiResponse' => false, 'message' => 'Email already verified.'], 400);

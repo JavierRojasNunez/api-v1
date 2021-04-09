@@ -14,11 +14,11 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 
-Auth::routes(['verify' => true]);
+//Auth::routes(['verify' => true]);
+Auth::routes();
 
-//rutas para la verificacion de email si fuese solo API
-//Route::get('email/verify/{id}/{hash}', [App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');  
-//Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+//rutas para la verificacion de email 
+Route::get('email/verify/{id}/{hash}', [App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');  
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::post('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

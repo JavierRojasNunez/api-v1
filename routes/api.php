@@ -41,7 +41,8 @@ Route::group(['prefix' => 'v1/auth'], function () {
 
     Route::group(['middleware' => 'auth:api'], function() {
         
-        
+        Route::get('email/resend', [App\Http\Controllers\VerificationController::class, 'resend'])->name('verification.resend');
+
         Route::get('logout', [App\Http\Controllers\AuthApiController::class, 'logout']);
         Route::get('user', [App\Http\Controllers\AuthApiController::class, 'user']);
         

@@ -20,6 +20,9 @@ Auth::routes();
 //rutas para la verificacion de email 
 Route::get('email/verify/{id}/{hash}', [App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');  
 
+
+
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::post('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/confirmation', [App\Http\Controllers\HomeController::class, 'redirectRegister']);

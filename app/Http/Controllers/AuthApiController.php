@@ -24,7 +24,7 @@ class AuthApiController extends Controller
 
         
         if(!$request->isMethod('post') || !$request->has(['name', 'email', 'password', 'password_confirmation'])){
-            return response()->json(['apiResponse' => false, 'message' => 'you have not sent any data or data is missing'], 200);
+            return response()->json(['apiResponse' => false, 'message' => 'you have not sent any data or data is missing'], 401);
         }
 
         $userExists = User::where("email", $request->email)->exists();

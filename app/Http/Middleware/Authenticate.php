@@ -14,10 +14,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        
         if (! $request->expectsJson()) {
-            return route('login');
+            return route('noUserRegister');
         }else{
-            response()->json(['error' => 'Bad credentials'], 406);
+            return response()->json(['error' => 'Bad credentials'], 406);
         }
     }
 }

@@ -958,10 +958,16 @@ class ApiController extends Controller
                 
             }  
                     
-            return response()->json(['status'=>'Data found' ,'anuncio'=>$dataAnounce], $this->HttpstatusCode);
+            return response()->json(['status'=>'Data found', 'anuncio'=>$dataAnounce], $this->HttpstatusCode);
             
         }
 
+
+    }
+
+    public function noUserRegister(){
+
+        return response()->json(['apiResponse' => false , 'message' => 'You are not register.'], $this->HttpstatusCode);
 
     }
 

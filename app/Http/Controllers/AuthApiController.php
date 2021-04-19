@@ -22,9 +22,9 @@ class AuthApiController extends Controller
     public function signup(Request $request)
     {
 
-        
+
         if(!$request->isMethod('post') || !$request->has(['name', 'email', 'password', 'password_confirmation'])){
-            return response()->json(['apiResponse' => false, 'message' => 'you have not sent any data or data is missing'], 401);
+            return response()->json(['apiResponse' => false, 'message' => 'you have not sent any data or data is missing'], 406);
         }
 
         $userExists = User::where("email", $request->email)->exists();
@@ -39,12 +39,12 @@ class AuthApiController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-  
 
-        if ($verify->fails()) { 
-            return response()->json(['apiResponse' => false, 'errors'=> $verify->errors() ], 401);            
+
+        if ($verify->fails()) {
+            return response()->json(['apiResponse' => false, 'errors'=> $verify->errors() ], 401);
         }
-       
+
 
         try
         {
@@ -59,29 +59,29 @@ class AuthApiController extends Controller
         }catch(Exception $e){
 
             return response()->json(['apiResponse' => false , 'message' => 'Not created, Problems whith data base, please try again!.'], 406);
-            
+
         }
-        
+
         return response()->json(['apiResponse' => true, 'message' => 'Successfully created user! You can login After confirm your email.'], $this->HttpstatusCode);
 
-        
-            
+
+
     }
 
     public function login(Request $request)
     {
-        
-        
+
+
         $verify = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string', 'min:8'],
             'remember_me' => ['boolean'],
         ]);
 
-  
 
-        if ($verify->fails()) { 
-            return response()->json(['apiResponse' => false , 'error'=>$verify->errors()], 401);            
+
+        if ($verify->fails()) {
+            return response()->json(['apiResponse' => false , 'error'=>$verify->errors()], 401);
         }
 
 
@@ -89,15 +89,13 @@ class AuthApiController extends Controller
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'apiResponse' => false , 
+                'apiResponse' => false ,
                 'message' => 'Unauthorized'], 401);
         }
 
         if (!Auth::user()->hasVerifiedEmail()) {
             return response()->json(['apiResponse' => false , 'message' => 'You must verify your email.'], 406);
         }
-        
-       
 
         $user = $request->user();
 
@@ -108,7 +106,7 @@ class AuthApiController extends Controller
         }
         $token->save();
         return response()->json([
-            'apiResponse' => true , 
+            'apiResponse' => true ,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
@@ -120,8 +118,11 @@ class AuthApiController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return response()->json(['apiResponse' => true , 'message' =>
-            'Successfully logged out']);
+        return response()->json([
+
+            'apiResponse' => true ,
+            'message' => 'Successfully logged out']);
+
     }
 
     public function user(Request $request)

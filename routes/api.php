@@ -34,28 +34,30 @@ Route::post('/v1/nouser', [App\Http\Controllers\ApiController::class, 'noUserReg
 Route::group(['prefix' => 'v1/auth'], function () {
 
     Route::post('login',  [App\Http\Controllers\AuthApiController::class, 'login'])->name('apiLogin');
-    Route::post('signup', [App\Http\Controllers\AuthApiController::class, 'signup']);    
+    Route::post('signup', [App\Http\Controllers\AuthApiController::class, 'signup']);
     Route::post('email/resend', [App\Http\Controllers\VerificationController::class, 'resend'])->name('verification.resend');
 
     Route::group(['middleware' => 'auth:api'], function() {
-        
+
         Route::group(['middleware' => 'isMailVerified:api'], function() {
 
             Route::get('logout', [App\Http\Controllers\AuthApiController::class, 'logout']);
             Route::get('user', [App\Http\Controllers\AuthApiController::class, 'user']);
-            
+
             Route::get('resume/{limit?}/{id?}', [App\Http\Controllers\ApiController::class, 'getResumeWithImages']);
             Route::post('create/{id?}', [App\Http\Controllers\ApiController::class, 'create']);
             Route::post('update/{id?}', [App\Http\Controllers\ApiController::class, 'create']);
-            Route::delete('eliminar-anuncio/{id}', [App\Http\Controllers\ApiController::class, 'delete']);        
-            Route::get('anuncios', [App\Http\Controllers\ApiController::class, 'getAll']);
+            Route::delete('eliminar-anuncio/{id}', [App\Http\Controllers\ApiController::class, 'delete']);
+
+            Route::get('anuncios', [App\Http\Controllers\ApiDataController::class, 'getAnounces']);
+
             Route::get('anuncio/{id?}', [App\Http\Controllers\ApiController::class, 'getOne']);
             Route::get('basics/{id?}', [App\Http\Controllers\ApiController::class, 'getBasics']);
             Route::get('by/{arga}/{argb?}/{argc?}', [App\Http\Controllers\ApiController::class, 'getBy']);
             Route::delete('delete-image/{id}', [App\Http\Controllers\ApiController::class, 'deleteImage']);
             Route::post('upload-images/{id}', [App\Http\Controllers\ApiController::class, 'uploadImage']);
 
-        });  
+        });
 
     });
 });

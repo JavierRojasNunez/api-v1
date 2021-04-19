@@ -11,7 +11,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    
+
 
     /**
      * Show the application dashboard.
@@ -20,42 +20,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-   
+
 
         $anuncios = Anounces::paginate(10)->onEachSide(0);
 
         $selections = Anounces::select('*')
-        
+
         ->limit(4)
         ->orderByDesc('id')
         ->get();
 
 
-        return view('home', [           
+        return view('home', [
             'anuncios' => $anuncios,
             'selections' => $selections,
         ]);
 
-       /* $imagenes = DB::table('images')
 
-            ->groupBy('anounces_id')
-            ->get();
-            dd($imagenes);  */ 
-
-  
-        /*$anuncios = DB::table('anounces')
-        ->leftJoin('images', 'anounces.id', '=', 'images.anounces_id')
-        ->groupBy('images.anounces_id')
-        ->get();*/
-
-       /* $imagenes = DB::table('images')
-        ->leftJoin('anounces', 'images.anounces_id', '=', 'anounces.id')
-        ->groupBy('images.anounces_id')
-        ->get();*/
-
-
-        
-        
     }
 
     public function detail($anounce_id){
@@ -66,7 +47,7 @@ class HomeController extends Controller
         ->orderByDesc('id')
         ->get();
 
-        return view('anuncios.detail', [           
+        return view('anuncios.detail', [
             'anuncio' => $anuncio,
             'selections' => $selections,
         ]);
@@ -83,13 +64,13 @@ class HomeController extends Controller
         ->orderByDesc('id')
         ->get();
 
-        
+
         $mensaje = 'Genial!! el registro fué bien. Te hemos enviado un email para que verifiques tu cuenta.';
-        return view('home', [           
+        return view('home', [
             'anuncios' => $anuncios,
             'registro_ok' => $mensaje,
             'selections' => $selections,
         ])->with(['statuss_' => $mensaje]);
-        
+
     }
 }
